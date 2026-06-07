@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.625rem;
+
+    /* OnboardIQ Dark Theme */
+    --background: 0.095 0.028 261;
+    --foreground: 0.96 0.01 255;
+    --card: 0.135 0.032 261;
+    --card-foreground: 0.96 0.01 255;
+    --popover: 0.16 0.034 261;
+    --popover-foreground: 0.96 0.01 255;
+    --primary: 0.55 0.21 258;
+    --primary-foreground: 0.985 0 0;
+    --secondary: 0.165 0.032 261;
+    --secondary-foreground: 0.85 0.01 255;
+    --muted: 0.165 0.028 261;
+    --muted-foreground: 0.62 0.02 255;
+    --accent: 0.72 0.12 82;
+    --accent-foreground: 0.12 0.02 261;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.22 0.03 261;
+    --input: 0.22 0.03 261;
+    --ring: 0.55 0.21 258;
+
+    --navy-bg: #0A0F1E;
+    --navy-card: #141B2D;
+    --navy-border: #24304A;
+    --brand-blue: #2563EB;
+    --brand-gold: #C9A84C;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(160deg, #0A0F1E 0%, #070B16 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  ::selection {
+    background: rgba(201, 168, 76, 0.3);
+    color: #fff;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0A0F1E;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #24304A;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2563EB;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Glow effects */
+  .glow-gold {
+    box-shadow: 0 0 0 1px rgba(201,168,76,0.4), 0 0 20px rgba(201,168,76,0.2);
+  }
+  .glow-blue {
+    box-shadow: 0 0 0 1px rgba(37,99,235,0.4), 0 0 20px rgba(37,99,235,0.2);
+  }
+
+  /* Card hover */
+  .card-hover {
+    transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+  }
+
+  /* Gradient text */
+  .gradient-text-gold {
+    background: linear-gradient(135deg, #C9A84C 0%, #F3D89B 50%, #C9A84C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-blue {
+    background: linear-gradient(135deg, #2563EB 0%, #4AA3FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(20, 27, 45, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(36, 48, 74, 0.8);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Progress ring */
+  @keyframes progress-ring-fill {
+    from { stroke-dashoffset: 565; }
+  }
+  .animate-progress-ring {
+    animation: progress-ring-fill 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  /* Pulse gold */
+  @keyframes pulse-ring-gold {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(201,168,76,0); }
+  }
+  .animate-pulse-gold {
+    animation: pulse-ring-gold 2s ease-in-out infinite;
+  }
+
+  /* Typing indicator */
+  @keyframes typing-dot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+  .typing-dot {
+    animation: typing-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Magnetic button base */
+  .magnetic-btn {
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+
+  /* 3D perspective for scroll sections */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  /* Stagger children animation */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  /* Hide scrollbar but keep scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Three.js canvas */
+.three-canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* GSAP reveal classes */
+.reveal-up {
+  will-change: transform, opacity;
+}
+.reveal-left {
+  will-change: transform, opacity;
+}
+.reveal-right {
+  will-change: transform, opacity;
+}
+
+/* Chat widget */
+.chat-widget {
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(36,48,74,0.8);
+}
+
+/* Input focus glow */
+input:focus, textarea:focus {
+  outline: none;
+}
+
+/* Auth page ambient glow */
+.auth-glow-left {
+  position: absolute;
+  left: -200px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.auth-glow-right {
+  position: absolute;
+  right: -200px;
+  top: 30%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
