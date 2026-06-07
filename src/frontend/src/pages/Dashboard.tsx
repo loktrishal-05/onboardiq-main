@@ -410,18 +410,24 @@ export default function Dashboard() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
 
-    api.plan.generate({
+    const userObj = {
+      id: user?.id || 'guest',
+      name: user?.name || 'New Employee',
+      email: user?.email || '',
       role: user?.role || 'Software Engineer',
       department: user?.department || 'Engineering',
       seniority: user?.seniority || 'L3',
       location: user?.location || 'Remote',
-    })
+      startDate: user?.startDate || new Date().toISOString().split('T')[0],
+      completedTasks: user?.completedTasks || [],
+    };
+
+    api.plan.generate(userObj)
       .then((data) => {
         clearTimeout(timeout);
         setPlanData(data as PlanResponse);
-        if (user?.completedTasks?.length) {
-          setCompletedIds(new Set(user.completedTasks));
-        }
+        const saved = api.tasks.getCompleted(userObj.id);
+        setCompletedIds(new Set(saved));
         setLoading(false);
       })
       .catch(() => {
@@ -434,14 +440,12 @@ export default function Dashboard() {
     return () => { clearTimeout(timeout); controller.abort(); };
   }, [user]);
 
-  const toggleTask = async (id: string) => {
+  const toggleTask = (id: string) => {
     const newCompleted = new Set(completedIds);
     const isNowCompleted = !newCompleted.has(id);
     if (isNowCompleted) newCompleted.add(id); else newCompleted.delete(id);
     setCompletedIds(newCompleted);
-    try {
-      await api.dashboard.completeTask({ taskId: id, completed: isNowCompleted });
-    } catch { /* silent fail */ }
+    api.tasks.complete(user?.id || 'guest', id, isNowCompleted);
   };
 
   const data = planData ?? MOCK_RESPONSE;

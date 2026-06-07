@@ -56,7 +56,7 @@ export default function AIChatbot({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { isAuthenticated } = useAuthStore();
+  const { user } = useAuthStore();
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -96,15 +96,13 @@ export default function AIChatbot({
       .map((m) => ({ role: m.role, content: m.content }));
 
     try {
-      const payload = { message: trimmed, history };
-      const data = isAuthenticated
-        ? await api.chat.message(payload) as { reply: string }
-        : await api.chat.messagePublic(payload) as { reply: string };
+      const data = await api.chat.message(trimmed, history, user) as { reply?: string } | string;
+      const reply = typeof data === 'string' ? data : (data as { reply?: string }).reply || data as string;
 
       const assistantMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.reply,
+        content: reply,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, assistantMsg]);
