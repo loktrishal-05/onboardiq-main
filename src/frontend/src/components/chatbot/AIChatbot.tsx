@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { X, Send, Sparkles, Bot, User, RefreshCw } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import { api } from '../../utils/api';

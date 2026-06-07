@@ -4,7 +4,7 @@ import {
   HelpCircle, Home, ListTodo, LogOut, MessageSquare, Monitor,
   Search, Shield, Sparkles, TrendingUp, Users, Zap,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { api } from '../utils/api';
